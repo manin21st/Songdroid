@@ -2,16 +2,16 @@ package fwk;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitConnection {
 
-    String URL = "https://www.abc.com/"; // 서버 API
-
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(URL)
+            .baseUrl("http://118.38.159.9/")
             .addConverterFactory(GsonConverterFactory.create())
+//            .addConverterFactory(ScalarsConverterFactory.create())
             .build();
 
-    RetrofitInterface server = retrofit.create(RetrofitInterface.class);
+    public RetrofitInterface server = retrofit.create(RetrofitInterface.class);
 
 }
