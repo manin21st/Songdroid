@@ -49,19 +49,19 @@ public class BasicActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Log.d("Retrofit 성공1", result);
+                        Log.d("[RunSql]성공1", result);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
                     // 서버와 연결은 되었으나 오류 발생
-                    Log.d("Retrofit 성공2", "오류 발생");
+                    Log.d("[RunSql]성공2", "오류 발생");
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("Retrofit 실패", t.toString()); //서버와 연결 실패
+                Log.d("[RunSql]실패", t.toString()); //서버와 연결 실패
             }
         });
 

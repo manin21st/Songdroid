@@ -6,11 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private String[] myDataset;
+//    private String[] myDataset;
+    private ArrayList<String> myDataset = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +29,13 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        myDataset = new String[100];  // 배열초기화
+//        myDataset = new String[100];  // 배열초기화
+//        for (int i=0;i<100;i++) {
+//            myDataset[i] = "RecyclerView Row-" + i;
+//        }
+
         for (int i=0;i<100;i++) {
-            myDataset[i] = "RecyclerView Row-" + i;
+            myDataset.add("RecyclerView Row-" + i);
         }
         // specify an adapter (see also next example)
         adapter = new MyAdapter(myDataset);
