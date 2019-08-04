@@ -1,4 +1,4 @@
-package com.gnos.recyclerview;
+package com.gnos.recyclerview3;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,27 +12,37 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
-    private ArrayList<String> myDataset = new ArrayList<String>();
+    private ArrayList<ItemModel> itemModel = new ArrayList<ItemModel>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+        // RecyclerView 연결
+        recyclerView = (RecyclerView) findViewById(R.id.item_list);
         recyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
+        // LayoutManager 생성 및 지정
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        for (int i=0;i<100;i++) {
-            myDataset.add("RecyclerView Row-" + i);
+        for (int i=1; i<100; i++) {
+            addItemList("품번"+i, "품명"+i, "규격"+i);
         }
-        // specify an adapter (see also next example)
-        adapter = new MyAdapter(myDataset);
+
+        // Adapter 생성 및 지정
+        adapter = new ItemAdapter(itemModel);
         recyclerView.setAdapter(adapter);
+    }
+
+    private void addItemList(String itnbr, String itdsc, String ispec) {
+        ItemModel item = new ItemModel();
+
+        item.setItnbr(itnbr);
+        item.setItdsc(itdsc);
+        item.setIspec(ispec);
+
+        itemModel.add(item);
     }
 }

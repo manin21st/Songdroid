@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
-//    private String[] mDataset;
     private ArrayList<String> mDataset;
 
     // Provide a reference to the views for each data item
@@ -29,9 +28,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-//    public MyAdapter(String[] myDataset) {
-//        mDataset = myDataset;
-//    }
     public MyAdapter(ArrayList<String> myDataset) {
         mDataset = myDataset;
     }
@@ -54,14 +50,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-//        holder.textView.setText(String.valueOf(mDataset[position]));
         holder.textView.setText(mDataset.get(position));
     }
 
     @Override
     // Return the size of your dataset (invoked by the layout manager)
     public int getItemCount() {
-//        return mDataset.length;
         return mDataset.size();
     }
 

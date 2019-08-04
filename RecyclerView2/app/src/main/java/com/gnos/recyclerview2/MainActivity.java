@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerImageTextAdapter mAdapter = null;
     ArrayList<RecyclerItem> mList = new ArrayList<RecyclerItem>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         // 리사이클러뷰에 LinearLayoutManager 지정. (vertical)
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+
+        // Image RecyclterView --------------------------------------------------------------------
         // 아이템 추가.
         addItem(ContextCompat.getDrawable(this, R.drawable.ic_assign_foreground),
                 "Box", "Account Box Black 36dp");
@@ -35,12 +38,12 @@ public class MainActivity extends AppCompatActivity {
         // 세 번째 아이템 추가.
         addItem(ContextCompat.getDrawable(this, R.drawable.ic_assign_foreground),
                 "Android", "Account Android Black 36dp");
-
 //        mAdapter.notifyDataSetChanged();
 
         // 리사이클러뷰에 SimpleTextAdapter 객체 지정.
         mAdapter = new RecyclerImageTextAdapter(mList);
         recyclerView.setAdapter(mAdapter);
+
     }
 
     private void addItem(Drawable icon, String title, String desc) {

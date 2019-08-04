@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RecyclerImageTextAdapter extends RecyclerView.Adapter<RecyclerImageTextAdapter.ViewHolder> {
-    private ArrayList<RecyclerItem> mList = null;
+public class RecyclerImageTextAdapter extends RecyclerView.Adapter<RecyclerImageTextAdapter.MyViewHolder> {
+    private ArrayList<RecyclerItem> mList;
 
     // 생성자에서 데이터리스트 객체를 전달받음
     public RecyclerImageTextAdapter(ArrayList<RecyclerItem> list) {
@@ -24,22 +25,22 @@ public class RecyclerImageTextAdapter extends RecyclerView.Adapter<RecyclerImage
     @NonNull
     @Override
     // onCreateViewHolder() - 아이템 뷰를 위한 뷰홀더 객체 생성하여 리턴.
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        Context context = parent.getContext();
-//        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View view = inflater.inflate(R.layout.recycler_item, parent, false);
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = inflater.inflate(R.layout.recycler_item, parent, false);
 
-        // create a new view
-        ConstraintLayout v = (ConstraintLayout) LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_item, parent, false);
+//        // create a new view
+//        LinearLayout v = (LinearLayout) LayoutInflater.from(parent.getContext())
+//                .inflate(R.layout.recycler_item, parent, false);
 
-        ViewHolder vh = new ViewHolder(v);
+        MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
 
     @Override
     // onBindViewHolder() - position에 해당하는 데이터를 뷰홀더의 아이템뷰에 표시.
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         RecyclerItem item = mList.get(position);
 
@@ -55,12 +56,12 @@ public class RecyclerImageTextAdapter extends RecyclerView.Adapter<RecyclerImage
     }
 
     // 아이템 뷰를 저장하는 뷰홀더 클래스.
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView icon;
         TextView title;
         TextView desc;
 
-        public ViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             // 뷰 객체에 대한 참조. (hold strong reference)
