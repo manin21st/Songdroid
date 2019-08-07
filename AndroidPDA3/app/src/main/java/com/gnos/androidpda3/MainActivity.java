@@ -23,9 +23,9 @@ import android.view.Menu;
 
 import org.json.JSONArray;
 
-import fwk.BasicActivity;
+import fwk.GnosActivity;
 
-public class MainActivity extends BasicActivity
+public class MainActivity extends GnosActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override

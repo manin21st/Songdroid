@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import org.json.JSONArray;
 
-import fwk.BasicActivity;
+import fwk.GnosActivity;
 
-public class LoginActivity extends BasicActivity {
+public class LoginActivity extends GnosActivity {
 
     private EditText et_id;
     private EditText et_pwd;

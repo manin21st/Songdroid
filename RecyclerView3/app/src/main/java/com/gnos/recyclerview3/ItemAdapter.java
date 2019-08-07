@@ -19,6 +19,19 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         this.vitem = item;
     }
 
+    // 리스트 한행 추가
+    public void addItem(ItemModel item) {
+//        this.vitem.add(0, item);
+        this.vitem.add(item);
+        notifyDataSetChanged();
+    }
+
+    // 리스트 여러행 추가
+    public void addItemList(ArrayList<ItemModel> itemList) {
+        this.vitem.addAll(itemList);
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView vitnbr;
         public TextView vitdsc;

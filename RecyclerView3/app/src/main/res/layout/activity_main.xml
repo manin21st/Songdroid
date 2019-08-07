@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Button
+        android:id="@+id/btn_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="조회"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_list"
         android:scrollbars="vertical"
