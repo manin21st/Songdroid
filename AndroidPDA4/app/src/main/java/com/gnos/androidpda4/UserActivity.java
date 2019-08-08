@@ -20,10 +20,10 @@ import java.util.List;
 import fwk.GnosActivity;
 
 public class UserActivity extends GnosActivity {
-    private static final String TAG_1 = "userid";
-    private static final String TAG_2 = "password";
-    private static final String TAG_3 = "empname";
-    private static final String TAG_4 = "deptname";
+    private static final String TAG_1 = "L_USERID";
+    private static final String TAG_2 = "L_PASSWORD";
+    private static final String TAG_3 = "EMPNAME";
+    private static final String TAG_4 = "DEPTNAME";
 
     Button button1;
     ListView list;
