@@ -3,30 +3,29 @@ package com.gnos.androidpda4;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import fwk.GnosActivity;
+import fwk.GnosListview;
 
-public class UserActivity extends GnosActivity {
+public class UserActivity2 extends GnosActivity {
     String[] mapTag;
-    ArrayList<HashMap<String, String>> mapList;
 
+    private RecyclerView recyclerView;
+    private GnosListview gnosListview;
     private Button btnRe, btnAp;
-    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user);
+        setContentView(R.layout.activity_user2);
 
-        list = findViewById(R.id.list_view);
+        onLoad();
 
         // 조회버튼 클릭
         btnRe = findViewById(R.id.btn_retrieve);
@@ -72,14 +71,26 @@ public class UserActivity extends GnosActivity {
     }
 
     protected void onAppend() {
+        HashMap<String, String> row = new HashMap<>();
+
+        row.put(mapTag[0], "TEST");
+        row.put(mapTag[1], "12345");
+        row.put(mapTag[2], "테스트");
+        row.put(mapTag[3], "품질팀");
+
+        gnosListview.addRow(row);
     }
 
-    protected void showList(JSONArray jsa) {
-        mapList = GetList(jsa);
+    protected void onLoad() {
         mapTag = new String[] {"L_USERID", "L_PASSWORD", "EMPNAME", "DEPTNAME"};
         int[] rid = new int[] {R.id.id, R.id.pwd, R.id.name, R.id.dept};
 
-        ListAdapter adapter = new SimpleAdapter(this, mapList, R.layout.activity_user_list, mapTag, rid);
-        list.setAdapter(adapter);
+        // RecyclerView 연결
+        recyclerView = (RecyclerView) findViewById(R.id.list_view);
+        gnosListview = new GnosListview(this, recyclerView, R.layout.activity_user_list, rid, mapTag);
+    }
+
+    protected void showList(JSONArray jsa) {
+        gnosListview.setRows(GetList(jsa));
     }
 }

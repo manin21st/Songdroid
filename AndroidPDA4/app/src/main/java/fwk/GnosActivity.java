@@ -2,16 +2,24 @@ package fwk;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.gnos.androidpda4.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,14 +42,44 @@ public class GnosActivity extends AppCompatActivity {
 
     }
 
+
+    /*-------------------------JSON data 처리 기능(Start)--------------------------*/
+    protected ArrayList<HashMap<String, String>> GetList(JSONArray jsa) {
+        ArrayList<HashMap<String, String>> hmapList = new ArrayList<>();
+
+        try {
+            for (int i=0;i<jsa.length();i++) {
+                JSONObject jso = jsa.getJSONObject(i);
+
+                HashMap<String, String> hmap = new HashMap<>();
+
+                Iterator keys = jso.keys();
+                while (keys.hasNext()) {
+                    String skey = (String) keys.next();
+                    hmap.put(skey, jso.getString(skey));
+                }
+
+                hmapList.add(hmap);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return hmapList;
+    }
+    /*-------------------------JSON data 처리 기능(End)----------------------------*/
+
+
+
     /*-------------------------SQL 실행 관련 기능(Start)--------------------------*/
     //-1. RunSql(String sID, String sSql) => select 구문
-    //-2. SqlResult(String sID, JSONArray jResult) => select 결과값 콜백 리턴
-    protected void RunSql(String sID, String sSql) {
+    //-2. SqlResult(String sID, JSONArray jsa) => select 결과값 콜백 리턴
+    protected void RunSql(String sid, String sql) {
 
-        str_id = sID;  // sql 실행구분자
+        str_id = sid;  // sql 실행구분자
 
-        Call<ResponseBody> call = datasvc.RunSql(sID, sSql);
+        Call<ResponseBody> call = datasvc.RunSql(sid, sql);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -73,9 +111,9 @@ public class GnosActivity extends AppCompatActivity {
 
     }
     // SQL 구문 실행 후 콜백 메소드
-    protected void SqlResult(String sID, JSONArray jResult) {
+    protected void SqlResult(String sid, JSONArray jsa) {
 
-        if (jResult == null) {
+        if (jsa == null) {
             Toast.makeText(this, "서비스 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
             Log.d("[SqlResult]", "jResult == null"); //서버와 연결 실패
         } else {
