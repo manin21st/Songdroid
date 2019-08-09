@@ -66,8 +66,8 @@ public class LoginActivity extends GnosActivity {
 
 
         // 메인 화면으로 이동
-//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        Intent intent = new Intent(LoginActivity.this, UserActivity2.class);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//        Intent intent = new Intent(LoginActivity.this, UserActivity2.class);
         intent.putExtra("userID", str_id);
         intent.putExtra("userPassword", str_pwd);
         startActivity(intent);  // 액티비티 이동

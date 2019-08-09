@@ -10,10 +10,10 @@ import org.json.JSONArray;
 
 import java.util.HashMap;
 
-import fwk.GnosActivity;
+import fwk.GnosActivity2;
 import fwk.GnosListview;
 
-public class UserActivity2 extends GnosActivity {
+public class UserActivity2 extends GnosActivity2 {
     String[] mapTag;
 
     private RecyclerView recyclerView;
@@ -91,6 +91,6 @@ public class UserActivity2 extends GnosActivity {
     }
 
     protected void showList(JSONArray jsa) {
-        gnosListview.setRows(GetList(jsa));
+        gnosListview.setRows(GetHashMap(jsa));
     }
 }

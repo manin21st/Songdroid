@@ -18,6 +18,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.Menu;
 
@@ -88,6 +90,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        // 프래그먼트 매니저 생성
+        FragmentManager manager = getSupportFragmentManager();
+
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -97,7 +102,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_tools) {
 
         } else if (id == R.id.nav_share) {
-
+//            manager.beginTransaction().replace(R.id.content_main, new UserFragment()).commit();
+            manager.beginTransaction().replace(R.id.content_main, new TestFragment()).commit();
         } else if (id == R.id.nav_send) {
 
         }
