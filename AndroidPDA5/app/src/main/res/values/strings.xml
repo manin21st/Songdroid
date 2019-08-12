@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PRiS Mobile System v1.0</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">(주)에스티엘소프트 바코드 시스템</string>
+    <string name="nav_header_subtitle">stlsoft@stlsoft.co.kr</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">설정</string>
+
+    <string name="menu_home">자재 불출 등록</string>
+    <string name="menu_gallery">제품 출고 등록</string>
+    <string name="menu_slideshow">재고 실사 등록</string>
+    <string name="menu_tools">바코드 라벨 확인</string>
+    <string name="menu_share">사용자 등록</string>
+    <string name="menu_send">시스템 정보</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

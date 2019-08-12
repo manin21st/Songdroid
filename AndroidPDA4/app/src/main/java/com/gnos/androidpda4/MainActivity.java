@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.view.Menu;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,8 +103,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_tools) {
 
         } else if (id == R.id.nav_share) {
-//            manager.beginTransaction().replace(R.id.content_main, new UserFragment()).commit();
-            manager.beginTransaction().replace(R.id.content_main, new TestFragment()).commit();
+
         } else if (id == R.id.nav_send) {
 
         }

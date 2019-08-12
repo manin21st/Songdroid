@@ -1,15 +1,19 @@
 package com.example.fragmentexample;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
+    Fragment curFragment;
     Button btn1, btn2, btn3, btn4;
 
     @Override
@@ -25,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                curFragment = new Fragment1();
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment1 fragment1 = new Fragment1();
-                transaction.replace(R.id.frame, fragment1);
+                transaction.replace(R.id.frame, curFragment);
+                transaction.addToBackStack("a");
                 transaction.commit();
             }
         });
@@ -35,9 +41,11 @@ public class MainActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                curFragment = new Fragment2();
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment2 fragment2 = new Fragment2();
-                transaction.replace(R.id.frame, fragment2);
+                transaction.replace(R.id.frame, curFragment);
+                transaction.addToBackStack("b");
                 transaction.commit();
             }
         });
@@ -45,9 +53,11 @@ public class MainActivity extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                curFragment = new Fragment3();
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment3 fragment3 = new Fragment3();
-                transaction.replace(R.id.frame, fragment3);
+                transaction.replace(R.id.frame, curFragment);
+                transaction.addToBackStack("c");
                 transaction.commit();
             }
         });
@@ -55,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                curFragment = new Fragment3();
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                Fragment4 fragment4 = new Fragment4();
-                transaction.replace(R.id.frame, fragment4);
+                transaction.replace(R.id.frame, curFragment);
+                transaction.addToBackStack("d");
                 transaction.commit();
             }
         });

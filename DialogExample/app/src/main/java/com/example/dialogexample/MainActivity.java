@@ -27,9 +27,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder ad = new AlertDialog.Builder(MainActivity.this);
-                ad.setIcon(R.mipmap.ic_launcher);
-                ad.setTitle("제목");
-                ad.setMessage("송드로이드는 존잘입니까?");
+                ad.setIcon(R.mipmap.ic_launcher).setTitle("제목").setMessage("송드로이드는 존잘입니까?");
+//                ad.setIcon(R.mipmap.ic_launcher);
+//                ad.setTitle("제목");
+//                ad.setMessage("송드로이드는 존잘입니까?");
 
                 final EditText et = new EditText(MainActivity.this);
                 ad.setView(et);

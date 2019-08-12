@@ -1,5 +1,6 @@
 package com.gnos.androidpda4;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -71,14 +72,10 @@ public class UserActivity2 extends GnosActivity2 {
     }
 
     protected void onAppend() {
-        HashMap<String, String> row = new HashMap<>();
-
-        row.put(mapTag[0], "TEST");
-        row.put(mapTag[1], "12345");
-        row.put(mapTag[2], "테스트");
-        row.put(mapTag[3], "품질팀");
-
-        gnosListview.addRow(row);
+        // 메인 화면으로 이동
+//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(UserActivity2.this, TestActivity.class);
+        startActivity(intent);  // 액티비티 이동
     }
 
     protected void onLoad() {

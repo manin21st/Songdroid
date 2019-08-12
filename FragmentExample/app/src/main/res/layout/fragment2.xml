@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
@@ -8,5 +9,12 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:text="송드로이드 천재"/>
+
+    <EditText
+        android:id="@+id/et_text"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:layout_marginTop="50dp"/>
 
 </FrameLayout>
