@@ -17,18 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class GnosListview extends Activity {
+public class GnosRecycler extends Activity {
 
     private GnosAdapter adapter;
-    private RecyclerView recyclerView;
     private int[] r_id;
     private int r_layout;
     private String[] j_tag;
 
-    public GnosListview(Context Ctx, RecyclerView Rcv, int R_layout, int[] R_id, String[] J_tag) {
-        recyclerView = Rcv;
-
-        recyclerView.setHasFixedSize(true);
+    public GnosRecycler(Context Ctx, RecyclerView Rcv, int R_layout, int[] R_id, String[] J_tag) {
+        Rcv.setHasFixedSize(true);
 
         // RecyclerView 바인딩 정보
         r_layout = R_layout;    // activity_user_list  <-  activity_user_list,xml
@@ -37,16 +34,16 @@ public class GnosListview extends Activity {
 
         // LayoutManager 생성 및 지정
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(Ctx);
-        recyclerView.setLayoutManager(layoutManager);
+        Rcv.setLayoutManager(layoutManager);
 
         // 구분선 추가
         DividerItemDecoration dividerItemDecoration =
-                new DividerItemDecoration(recyclerView.getContext(), new LinearLayoutManager(this).getOrientation());
-        recyclerView.addItemDecoration(dividerItemDecoration);
+                new DividerItemDecoration(Rcv.getContext(), new LinearLayoutManager(this).getOrientation());
+        Rcv.addItemDecoration(dividerItemDecoration);
 
         // Adapter 생성 및 지정
         adapter = new GnosAdapter();
-        recyclerView.setAdapter(adapter);
+        Rcv.setAdapter(adapter);
     }
 
     public void addRow(HashMap<String, String> row) {

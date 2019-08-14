@@ -17,7 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class GnosClass {
+public class GnosRetrofit {
     interface CallbackFunc {
         void runSqlCallBack(String sid, JSONArray jsa);
     }
@@ -30,7 +30,7 @@ public class GnosClass {
         this.callback = callback;
     }
 
-    public GnosClass() {
+    public GnosRetrofit() {
         // Retrofit HTTP 통신 설정
         Retrofit retrofit = new Retrofit.Builder().baseUrl(datasvc.BASE_URL).build();
         datasvc = retrofit.create(GnosInterface.class);

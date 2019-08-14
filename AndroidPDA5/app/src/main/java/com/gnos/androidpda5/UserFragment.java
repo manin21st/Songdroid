@@ -15,14 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
 
 import fwk.GnosFragment;
-import fwk.GnosListview;
+import fwk.GnosRecycler;
 
 public class UserFragment extends GnosFragment {
     String[] mapTag;
 
-    private JSONArray jsonArray;
     private RecyclerView recyclerView;
-    private GnosListview gnosListview;
+    private GnosRecycler gnosRecycler;
     private Button btnRe, btnAp;
 
     @Override
@@ -66,7 +65,7 @@ public class UserFragment extends GnosFragment {
 
         // RecyclerView 연결
         recyclerView = (RecyclerView) view.findViewById(R.id.list_view);
-        gnosListview = new GnosListview(getContext(), recyclerView, R.layout.fragment_user_list, rid, mapTag);
+        gnosRecycler = new GnosRecycler(getContext(), recyclerView, R.layout.fragment_user_list, rid, mapTag);
     }
 
     protected void onRetrieve() {
@@ -110,12 +109,11 @@ public class UserFragment extends GnosFragment {
 //        row.put(mapTag[2], "테스트");
 //        row.put(mapTag[3], "품질팀");
 //
-//        gnosListview.addRow(row);
+//        gnosRecycler.addRow(row);
     }
 
     protected void showList(JSONArray jsa) {
-        jsonArray = jsa;
-        gnosListview.setRows(GetHashMap(jsonArray));
+        gnosRecycler.setRows(GetHashMap(jsa));
     }
 
     @Override
@@ -126,11 +124,8 @@ public class UserFragment extends GnosFragment {
 
     @Override
     public void onResume() {
+        Log.d("[UserFragment]", "onResume...................");
         super.onResume();
-        if (jsonArray != null) {
-            Log.d("[UserFragment]", "onResume...................");
-            showList(jsonArray);
-        }
     }
 
     @Override
@@ -149,12 +144,21 @@ public class UserFragment extends GnosFragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         Log.d("[UserFragment]", "onSaveInstanceState...................");
         super.onSaveInstanceState(outState);
+
+//        outState.putStringArrayList("key", jsonArray);
+//        outState.putParcelable("key", (Parcelable) jsonArray);
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         Log.d("[UserFragment]", "onViewStateRestored...................");
         super.onViewStateRestored(savedInstanceState);
+//        if (savedInstanceState != null) {
+//            savedInstanceState.getParcelable("key");
+//        }
+//        if (jsonArray != null) {
+//            showList(jsonArray);
+//        }
     }
 
     @Override

@@ -8,14 +8,12 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 
 import java.util.HashMap;
 
 import fwk.GnosFragment;
-import fwk.GnosListview;
 
 public class UserFragmentEdit extends GnosFragment {
     String[] mapTag;
@@ -50,8 +48,6 @@ public class UserFragmentEdit extends GnosFragment {
 
         return rootView;
     }
-
-
 
     protected void onLoad(ViewGroup parent) {
     }
