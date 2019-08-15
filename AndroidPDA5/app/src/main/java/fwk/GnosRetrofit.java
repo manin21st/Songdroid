@@ -16,14 +16,39 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public class GnosRetrofit {
+    /*----------------------------Interface 정의(Start)-----------------------------*/
     interface CallbackFunc {
         void runSqlCallBack(String sid, JSONArray jsa);
     }
+    interface RetrofitInterface {
+        public static final String BASE_URL = "http://118.38.159.9/android_pda/";
+        public static final String TEST_URL = "http://jsonplaceholder.typicode.com/";
+
+        // TEST_URL
+        @GET("comments")
+        Call<ResponseBody> getComment(@Query("postId") int postId);
+        // TEST_URL
+        @FormUrlEncoded
+        @POST("comments")
+        Call<ResponseBody> getPostCommentStr(@Field("postId") String postId);
+
+        // BASE_URL
+        @FormUrlEncoded
+        @POST("RunSql.php")
+        Call<ResponseBody> RunSql(@Field("sqlID") String sqlID, @Field("sqlTEXT") String sqlTEXT);
+    }
+    /*----------------------------Interface 정의(End)-----------------------------*/
+
 
     private String str_id;
-    private GnosInterface datasvc;
+    private RetrofitInterface rtfif;
     private CallbackFunc callback;
 
     public void setCallbackFunc (CallbackFunc callback) {
@@ -32,8 +57,8 @@ public class GnosRetrofit {
 
     public GnosRetrofit() {
         // Retrofit HTTP 통신 설정
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(datasvc.BASE_URL).build();
-        datasvc = retrofit.create(GnosInterface.class);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(rtfif.BASE_URL).build();
+        rtfif = retrofit.create(RetrofitInterface.class);
     }
 
 
@@ -73,7 +98,7 @@ public class GnosRetrofit {
 
         str_id = sid;  // sql 실행구분자
 
-        Call<ResponseBody> call = datasvc.RunSql(sid, sql);
+        Call<ResponseBody> call = rtfif.RunSql(sid, sql);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
