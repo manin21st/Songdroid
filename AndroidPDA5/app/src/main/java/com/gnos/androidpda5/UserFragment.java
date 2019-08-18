@@ -1,18 +1,23 @@
 package com.gnos.androidpda5;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import fwk.GnosFragment;
 import fwk.GnosRecycler;
@@ -22,13 +27,6 @@ public class UserFragment extends GnosFragment {
 
     private RecyclerView recyclerView;
     private GnosRecycler gnosRecycler;
-    private Button btnRe, btnAp;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        Log.d("[UserFragment]", "onCreate...................");
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override
@@ -38,25 +36,39 @@ public class UserFragment extends GnosFragment {
 
         onLoad(view);
 
-        // 조회버튼 클릭
-        btnRe = view.findViewById(R.id.btn_retrieve);
-        btnRe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onRetrieve();
-            }
-        });
-
-        // 추가버튼 클릭
-        btnAp = view.findViewById(R.id.btn_append);
-        btnAp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAppend();
-            }
-        });
+        // 액션바 설정
+        ActionBar actionBar = ((MainActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle(getString(R.string.menu_user));
+        setHasOptionsMenu(true);  // 프래그먼트 onCreateOptionsMenu 호출
 
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d("[UserFragment]", "onCreateOptionsMenu...................");
+        super.onCreateOptionsMenu(menu, inflater);
+
+        getActivity().getMenuInflater().inflate(R.menu.menu_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.menu_edit:
+                onAppend();
+                break;
+            case R.id.menu_delete:
+                break;
+            case R.id.menu_search:
+                onRetrieve();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     protected void onLoad(View view) {
@@ -64,7 +76,7 @@ public class UserFragment extends GnosFragment {
         int[] rid = new int[] {R.id.id, R.id.pwd, R.id.name, R.id.dept};
 
         // RecyclerView 연결
-        recyclerView = (RecyclerView) view.findViewById(R.id.list_view);
+        recyclerView = view.findViewById(R.id.list_view);
         gnosRecycler = new GnosRecycler(getContext(), recyclerView, R.layout.fragment_user_list, rid, mapTag);
     }
 
@@ -84,23 +96,32 @@ public class UserFragment extends GnosFragment {
 //        onLoad(getView());
     }
     @Override
-    protected void SqlResult(String sID, JSONArray jsa) {
-        super.SqlResult(sID, jsa);
+    protected void SqlResult(String sID, JSONArray result) {
+        super.SqlResult(sID, result);
 
         switch (sID) {
             case "User" :
-                showList(jsa);
+                gnosRecycler.setListUp(result);
                 break;
         }
     }
 
     protected void onAppend() {
 
-        // 프래그먼트 생성
-        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.container, new UserFragmentEdit());
-        transaction.addToBackStack(null);
-        transaction.commit();
+        // 액티비티로 이동
+        Intent intent = new Intent(getActivity(), UserActivity.class);
+//        intent.putExtra("userID", str_id);
+//        intent.putExtra("userPassword", str_pwd);
+        startActivity(intent);
+//        getActivity().overridePendingTransition(R.anim.slide_down, R.anim.slide_up);
+//        getActivity().overridePendingTransition(R.anim.left_in, R.anim.left_out);
+        getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+
+//        // 프래그먼트로 이동
+//        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.container, new UserFragmentEdit());
+//        transaction.addToBackStack(null);
+//        transaction.commit();
 
 //        HashMap<String, String> row = new HashMap<>();
 //
@@ -110,34 +131,6 @@ public class UserFragment extends GnosFragment {
 //        row.put(mapTag[3], "품질팀");
 //
 //        gnosRecycler.addRow(row);
-    }
-
-    protected void showList(JSONArray jsa) {
-        gnosRecycler.setRows(GetHashMap(jsa));
-    }
-
-    @Override
-    public void onPause() {
-        Log.d("[UserFragment]", "onPause...................");
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        Log.d("[UserFragment]", "onResume...................");
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        Log.d("[UserFragment]", "onDestroyView...................");
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.d("[UserFragment]", "onDestroy...................");
-        super.onDestroy();
     }
 
     @Override
@@ -159,11 +152,5 @@ public class UserFragment extends GnosFragment {
 //        if (jsonArray != null) {
 //            showList(jsonArray);
 //        }
-    }
-
-    @Override
-    public void onStart() {
-        Log.d("[UserFragment]", "onStart...................");
-        super.onStart();
     }
 }

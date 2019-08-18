@@ -14,8 +14,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class GnosRecycler extends Activity {
 
@@ -54,6 +59,30 @@ public class GnosRecycler extends Activity {
         adapter.removeAll();
         adapter.addAll(list);
     }
+
+    /*-------------------------JSON data 처리 기능(Start)--------------------------*/
+    public void setListUp(JSONArray jsa) {
+        ArrayList<HashMap<String, String>> hmapList = new ArrayList<>();
+
+        try {
+            for (int i=0;i<jsa.length();i++) {
+                HashMap<String, String> hmap = new HashMap<>();
+
+                JSONObject jso = jsa.getJSONObject(i);
+                Iterator keys = jso.keys();
+                while (keys.hasNext()) {
+                    String skey = (String) keys.next();
+                    hmap.put(skey, jso.getString(skey));
+                }
+                hmapList.add(hmap);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        setRows(hmapList);
+    }
+    /*-------------------------JSON data 처리 기능(End)----------------------------*/
 
     public class GnosAdapter extends RecyclerView.Adapter<GnosAdapter.ViewHolder> {
         private ArrayList<HashMap<String, String>> mList = new ArrayList<>();

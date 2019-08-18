@@ -30,8 +30,8 @@ public class LoginActivity extends GnosActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                str_id = et_id.getText().toString();
-                str_pwd = et_pwd.getText().toString();
+        str_id = et_id.getText().toString();
+        str_pwd = et_pwd.getText().toString();
 
                 // 로그인 check
                 CheckUser();
@@ -53,17 +53,11 @@ public class LoginActivity extends GnosActivity {
         RunSql("User", sSql);
     }
 
-    private void OpenMain(JSONArray jResult) {
-        if (jResult.length() == 0) {
+    private void OpenMain(JSONArray result) {
+        if (result.length() == 0) {
             Toast.makeText(this, "등록되지 않은 사용자입니다.", Toast.LENGTH_SHORT).show();
 //            return;
         }
-
-//        String sUserid, sPassword, sDeptcode, sEmpno, sSaupj;
-//
-//        JSONObject jsonObject = jResult.getJSONObject(0);
-//        sUserid = jsonObject.getString("L_USERID");
-
 
         // 메인 화면으로 이동
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -74,12 +68,12 @@ public class LoginActivity extends GnosActivity {
     }
 
     @Override
-    protected void SqlResult(String sID, JSONArray jResult) {
-        super.SqlResult(sID, jResult);
+    protected void SqlResult(String sID, JSONArray result) {
+        super.SqlResult(sID, result);
 
         switch (sID) {
             case "User" :
-                OpenMain(jResult);
+                OpenMain(result);
                 break;
         }
     }
