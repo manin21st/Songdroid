@@ -1,5 +1,6 @@
 package fwk;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -21,6 +22,8 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+
+import static java.lang.Thread.sleep;
 
 public class GnosRetrofit {
     /*----------------------------Interface 정의(Start)-----------------------------*/
@@ -53,7 +56,7 @@ public class GnosRetrofit {
     }
     /*----------------------------Interface 정의(End)-----------------------------*/
 
-    private String str_id;
+    private String str_id, str_sql;
     private RetrofitInterface rtfif;
     private CallbackFunc callback;
 
@@ -93,46 +96,94 @@ public class GnosRetrofit {
         });
     }
 
-    private JSONArray setSyncListener(Call<ResponseBody> call) {
-        JSONArray jsonArray = null;
-        try {
-            String result = call.execute().body().toString();
-            try {
-                jsonArray = new JSONArray(result);
-            } catch (JSONException e) {
-                e.printStackTrace();
+    private boolean b_call;
+    private JSONArray jsa_result;
+
+    private JSONArray setSyncListener(final String mode) {
+//        jsa_result = null;
+        jsa_result = new JSONArray();
+
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                b_call = true;
+                return null;
             }
-            Log.d("[GnosRetrofit]4", result);
-        } catch (IOException e) {
-            e.printStackTrace();
+            @Override
+            protected void onPostExecute(String s) {
+                b_call = false;
+            }
+        }.execute();
+
+//        new AsyncTask<Void, Void, String>() {
+//            @Override
+//            protected String doInBackground(Void... voids) {
+//                try {
+//                    b_call = true;
+//                    Call<ResponseBody> call = getRetInf(mode);
+//                    return call.execute().body().toString();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                return null;
+//            }
+//            @Override
+//            protected void onPostExecute(String s) {
+//                b_call = false;
+//                try {
+//                    jsa_result = new JSONArray(s);
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.execute();
+
+        // 리턴 대기
+        while (b_call) {
+            try {
+                sleep(100);
+            } catch (InterruptedException e) {}
+        }
+        return jsa_result;
+    }
+    private Call<ResponseBody> getRetInf(final String mode) {
+        Call<ResponseBody> call = null;
+
+        switch (mode) {
+            case "RunSql":
+                call = rtfif.RunSql(str_id, str_sql);
+                break;
+            case "ExecSql":
+                call =  rtfif.ExecSql(str_id, str_sql);
+                break;
         }
 
-        return jsonArray;
+        return call;
     }
 
     /*-------------------------SQL 실행 관련 기능(Start)--------------------------*/
     //-1. RunSql(String sID, String sSql) => select 구문
     protected JSONArray RunSql(String sid, String sql) {
         str_id = sid;  // sql 실행구분자
+        str_sql = sql;
         JSONArray jsa = null;
 
-        Call<ResponseBody> call = rtfif.RunSql(sid, sql);
-        if (sid.length()>0) {
-            this.setAsyncListener(call);
+        if (sid.length() > 0) {
+            this.setAsyncListener(rtfif.RunSql(str_id, str_sql));
         } else {
-            jsa = this.setSyncListener(call);
+            jsa = this.setSyncListener("RunSql");
         }
         return jsa;
     }
     protected JSONArray ExecSql(String sid, String sql) {
         str_id = sid;  // sql 실행구분자
+        str_sql = sql;
         JSONArray jsa = null;
 
-        Call<ResponseBody> call = rtfif.ExecSql(sid, sql);
-        if (sid.length()>0) {
-            this.setAsyncListener(call);
+        if (sid.length() > 0) {
+            this.setAsyncListener(rtfif.ExecSql(str_id, str_sql));
         } else {
-            jsa = this.setSyncListener(call);
+            jsa = this.setSyncListener("ExecSql");
         }
         return jsa;
     }
