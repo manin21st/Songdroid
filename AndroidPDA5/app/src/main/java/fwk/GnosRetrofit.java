@@ -100,43 +100,31 @@ public class GnosRetrofit {
     private JSONArray jsa_result;
 
     private JSONArray setSyncListener(final String mode) {
-//        jsa_result = null;
         jsa_result = new JSONArray();
 
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
-                b_call = true;
+                try {
+                    b_call = true;
+                    Call<ResponseBody> call = getRetInf(mode);
+                    return call.execute().body().toString();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return null;
             }
             @Override
             protected void onPostExecute(String s) {
+                try {
+                    JSONArray jsa = new JSONArray(s);
+                    jsa_result = jsa;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 b_call = false;
             }
         }.execute();
-
-//        new AsyncTask<Void, Void, String>() {
-//            @Override
-//            protected String doInBackground(Void... voids) {
-//                try {
-//                    b_call = true;
-//                    Call<ResponseBody> call = getRetInf(mode);
-//                    return call.execute().body().toString();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                return null;
-//            }
-//            @Override
-//            protected void onPostExecute(String s) {
-//                b_call = false;
-//                try {
-//                    jsa_result = new JSONArray(s);
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }.execute();
 
         // 리턴 대기
         while (b_call) {
@@ -166,10 +154,11 @@ public class GnosRetrofit {
     protected JSONArray RunSql(String sid, String sql) {
         str_id = sid;  // sql 실행구분자
         str_sql = sql;
-        JSONArray jsa = null;
+
+        JSONArray jsa = new JSONArray();
 
         if (sid.length() > 0) {
-            this.setAsyncListener(rtfif.RunSql(str_id, str_sql));
+            this.setAsyncListener(getRetInf("RunSql"));
         } else {
             jsa = this.setSyncListener("RunSql");
         }
@@ -178,10 +167,11 @@ public class GnosRetrofit {
     protected JSONArray ExecSql(String sid, String sql) {
         str_id = sid;  // sql 실행구분자
         str_sql = sql;
-        JSONArray jsa = null;
+
+        JSONArray jsa = new JSONArray();
 
         if (sid.length() > 0) {
-            this.setAsyncListener(rtfif.ExecSql(str_id, str_sql));
+            this.setAsyncListener(getRetInf("ExecSql"));
         } else {
             jsa = this.setSyncListener("ExecSql");
         }

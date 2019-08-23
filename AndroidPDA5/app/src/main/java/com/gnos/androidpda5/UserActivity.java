@@ -112,7 +112,8 @@ public class UserActivity extends GnosActivity {
         String sname = layout.userName.getText().toString().trim();
         String sdept = layout.userDept.getText().toString().trim();
 
-        String sSql = "select 1 from login_t where l_userid='"+sid+"'";
+//        String sSql = "select 1 from login_t where l_userid='"+sid+"'";
+        String sSql = "select 1 from login_t where l_userid='TEST'";
         JSONArray result = RunSql("", sSql);
         if (result.length() > 0) {
             Toast.makeText(this, "이미 등록된 사용자입니다!", Toast.LENGTH_SHORT).show();
