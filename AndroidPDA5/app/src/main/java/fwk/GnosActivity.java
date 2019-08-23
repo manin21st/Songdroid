@@ -6,9 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class GnosActivity extends AppCompatActivity {
     private GnosRetrofit gnosRetrofit;
 
@@ -19,19 +16,19 @@ public class GnosActivity extends AppCompatActivity {
         gnosRetrofit = new GnosRetrofit();
         GnosRetrofit.CallbackFunc callback = new GnosRetrofit.CallbackFunc() {
             @Override
-            public void runSqlCallBack(String sid, JSONArray jsa) {
-                SqlResult(sid, jsa);
+            public void sqlCallbackFunc(String sid, JSONArray result) {
+                SqlResult(sid, result);
             }
         };
         gnosRetrofit.setCallbackFunc(callback);
     }
-    protected ArrayList<HashMap<String, String>> GetHashMap(JSONArray jsa) {
-        return gnosRetrofit.GetList(jsa);
+    protected JSONArray RunSql(String sid, String sql) {
+        return gnosRetrofit.RunSql(sid, sql);
     }
-    protected void RunSql(String sid, String sql) {
-        gnosRetrofit.RunSql(sid, sql);
+    protected JSONArray ExecSql(String sid, String sql) {
+        return gnosRetrofit.ExecSql(sid, sql);
     }
     // SQL 구문 실행 후 콜백 메소드
-    protected void SqlResult(String sid, JSONArray jsa) {
+    protected void SqlResult(String sid, JSONArray result) {
     }
 }

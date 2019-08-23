@@ -1,13 +1,19 @@
 package com.gnos.androidpda5;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 
 import org.json.JSONArray;
 
@@ -25,6 +31,12 @@ public class UserFragmentEdit extends GnosFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView =
                 (ViewGroup) inflater.inflate(R.layout.fragment_user_edit, container, false);
+
+        // 액션바 설정
+        ActionBar ab = ((MainActivity)getActivity()).getSupportActionBar();
+        ab.setTitle(getString(R.string.menu_user));
+        ab.setDisplayHomeAsUpEnabled(true);
+        setHasOptionsMenu(true);
 
         onLoad(rootView);
 
@@ -49,6 +61,25 @@ public class UserFragmentEdit extends GnosFragment {
         return rootView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        getActivity().getMenuInflater().inflate(R.menu.menu_edit, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Log.d("[UserFragmentEdit]", "onOptionsItemSelected...................");
+
+        if (id == android.R.id.home) {
+//            this.finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     protected void onLoad(ViewGroup parent) {
     }
 
@@ -66,8 +97,8 @@ public class UserFragmentEdit extends GnosFragment {
         RunSql("User", sSql);
     }
     @Override
-    protected void SqlResult(String sID, JSONArray jsa) {
-        super.SqlResult(sID, jsa);
+    protected void SqlResult(String sID, JSONArray result) {
+        super.SqlResult(sID, result);
 
         switch (sID) {
             case "User" :
