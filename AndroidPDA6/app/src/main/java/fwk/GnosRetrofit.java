@@ -62,28 +62,24 @@ public class GnosRetrofit {
 
     /*------------------------- 3. SQL 실행 관련 기능(Start) --------------------------*/
     // 3-1. RunSql(String sID, String sSql) => select 구문
-    protected JSONArray RunSql(String sid, String sql) {
+    protected JSONArray runSql(String sid, String sql) {
         str_id = sid;  // sql 실행구분자
         str_sql = sql;
 
         JSONArray jsa = new JSONArray();
         if (sid.length() > 0) {
             this.setAsyncCall("RunSql");
-        } else {
-            jsa = this.setSyncCall("RunSql");
         }
         return jsa;
     }
     // 3-2. ExecSql(String sID, String sSql) => insert, update, delete 구문
-    protected JSONArray ExecSql(String sid, String sql) {
+    protected JSONArray execSql(String sid, String sql) {
         str_id = sid;  // sql 실행구분자
         str_sql = sql;
 
         JSONArray jsa = new JSONArray();
         if (sid.length() > 0) {
-            this.setAsyncCall("RunSql");
-        } else {
-            jsa = this.setSyncCall("ExecSql");
+            this.setAsyncCall("ExecSql");
         }
         return jsa;
     }
@@ -140,84 +136,5 @@ public class GnosRetrofit {
                 Log.d("[GnosRetrofit]3", t.toString()); //서버와 연결 실패
             }
         });
-    }
-    // 2-3. 동기 호출 방식
-    private boolean b_run;
-    private String str_body;
-
-    private JSONArray setSyncCall(final String mode) {
-//        Call<ResponseBody> call = getRetrofitInterface(mode);
-
-        b_run = true;
-        str_body = null;
-//        new NetworkCall().execute(call);
-//        new DoBackCall().execute();
-
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... voids) {
-                Log.d("[GnosRetrofit]4", "setSyncCall-doInBackground...........");
-                return null;
-            }
-            @Override
-            protected void onPostExecute(String s) {
-                Log.d("[GnosRetrofit]5", "setSyncCall-onPostExecute...........");
-                super.onPostExecute(s);
-            }
-        }.execute();
-
-        // 리턴 대기
-        while (b_run) {
-            Log.d("[GnosRetrofit]6", "setSyncCall-while(b_run)...........");
-            try {
-                sleep(100);
-            } catch (InterruptedException e) {}
-        }
-
-        JSONArray jsa = new JSONArray();
-        if (str_body != null) {
-            Log.d("[GnosRetrofit]7", "setSyncCall-JSONArray..........."+str_body);
-            try {
-                jsa = new JSONArray(str_body);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return jsa;
-    }
-    private class DoBackCall extends AsyncTask<Void, Void, String> {
-        @Override
-        protected String doInBackground(Void... voids) {
-            Log.d("[GnosRetrofit]4", "DoBackCall-doInBackground...........");
-            return null;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            Log.d("[GnosRetrofit]5", "NetworkCall-onPostExecute...........");
-            super.onPostExecute(s);
-        }
-    }
-
-    private class NetworkCall extends AsyncTask<Call, Void, String> {
-        @Override
-        protected String doInBackground(Call... calls) {
-            Log.d("[GnosRetrofit]4", "NetworkCall-doInBackground...........");
-            try {
-                Call<ResponseBody> call = calls[0];
-                return call.execute().body().toString();
-//                Response<ResponseBody> response = call.execute();
-//                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-        @Override
-        protected void onPostExecute(String s) {
-            Log.d("[GnosRetrofit]5", "NetworkCall-onPostExecute...........");
-            super.onPostExecute(s);
-            b_run = false;
-            str_body = s;
-        }
     }
 }

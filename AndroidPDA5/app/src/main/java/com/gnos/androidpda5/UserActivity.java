@@ -113,19 +113,19 @@ public class UserActivity extends GnosActivity {
         String sdept = layout.userDept.getText().toString().trim();
 
 //        String sSql = "select 1 from login_t where l_userid='"+sid+"'";
-        String sSql = "select 1 from login_t where l_userid='TEST'";
+        String sSql = "select l_userid from login_t where l_userid='TEST'";
         JSONArray result = RunSql("", sSql);
         if (result.length() > 0) {
             Toast.makeText(this, "이미 등록된 사용자입니다!", Toast.LENGTH_SHORT).show();
         } else {
-            String sIns = "INSERT INTO LOGIN_T\n" +
-                    "(L_USERID, L_PASSWORD, L_DEPT, L_EMPNO, L_COMMENT, L_SAUPJ,\n" +
-                    " L_GUBUN, L_SABU, ORDER_YN, ADMIN_YN, CRT_DATE, CRT_TIME, CRT_USER)\n" +
-                    "VALUES\n" +
-                    "('"+sid+"', '"+spwd+"', '"+sdept+"', '"+sname+"', 'Y', '10',\n" +
-                    " '1', '1', 'P', 'W', TO_CHAR(SYSDATE,'YYYYMMDD'), TO_CHAR(SYSDATE,'HH24MISS'), 'ADMIN')";
-
-            ExecSql("Save", sIns);
+//            String sIns = "INSERT INTO LOGIN_T\n" +
+//                    "(L_USERID, L_PASSWORD, L_DEPT, L_EMPNO, L_COMMENT, L_SAUPJ,\n" +
+//                    " L_GUBUN, L_SABU, ORDER_YN, ADMIN_YN, CRT_DATE, CRT_TIME, CRT_USER)\n" +
+//                    "VALUES\n" +
+//                    "('"+sid+"', '"+spwd+"', '"+sdept+"', '"+sname+"', 'Y', '10',\n" +
+//                    " '1', '1', 'P', 'W', TO_CHAR(SYSDATE,'YYYYMMDD'), TO_CHAR(SYSDATE,'HH24MISS'), 'ADMIN')";
+//
+//            ExecSql("Save", sIns);
         }
     }
 
